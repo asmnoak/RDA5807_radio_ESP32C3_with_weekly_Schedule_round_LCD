@@ -27,8 +27,7 @@ CG9A01をサポートするライブラリは<a href="https://github.com/Bodmer/
  ・Xtal発振器（32768Hz）、コンデンサ類、オーディオジャック、配線類<br>
 </p>
 <p>
-<-- img src="./CG9A01_RDA5807_XIAO_1.jpg" width="440" height="360"><br -->
-![CG9A01_RDA5807_XIAO_1](https://github.com/asmnoak/RDA5807_radio_ESP32C3_with_weekly_Schedule_round_LCD/assets/39426016/6f05ab88-899a-4f0b-9769-642a3abd06d3)
+<img src="./CG9A01_RDA5807_XIAO_1.jpg" width="440" height="360"><br>
 左側が丸形カラーLCD、右側がXIAO ESP32CとRDA5807FPの基板。なお、BLK（バックライト制御）は接続していない。
 </p>
 <p><strong>接続</strong><br>
