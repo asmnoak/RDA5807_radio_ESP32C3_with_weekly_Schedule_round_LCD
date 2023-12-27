@@ -1,37 +1,38 @@
-<p><H3>�T�ԃX�P�W���[�����\��RDA5807 FM DSP���W�I�i�ی`LCD���p�o�[�W�����j</H3></p>
+<p><H3>週間スケジュールが可能なRDA5807 FM DSPラジオ（丸形LCD利用バージョン）</H3></p>
 <p>
-�\����Ɋی`�J���[LCD���p���g�p���A�T�ԃX�P�W���[�����\��FM���W�I�𐻍삵���̂ŏЉ��B<br>
-�ی`�J���[LCD�́A1.28�C���`�A240x240�A�h���C�o�[��CG9A01�ł���B<br>
-DSP���W�IIC��RDA5807FP�AI2C�C���^�[�t�F�[�X�ɂ��R���g���[���iMCU�j��Seeed Studio XIAO ESP32C3�ł���B<br>
-XIAO ESP32C3�ł́AClock�̐ݒ��NTP�𗘗p���A������Web�T�[�o�[�@�\�ŁA����^�T�ԃX�P�W���[���̐ݒ���s���Ă���B<br>
-�J����Arduino IDE 1.8�ōs�����B<br>
-�ی`�J���[LCD�ȊO�̊�{�I�Ȃ��Ƃ́A<a href="https://github.com/asmnoak/RDA5807_radio_ESP32C3_with_weekly_Schedule">������</a>���Q�Ƃ̂��ƁB
+表示器に丸形カラーLCD利用を使用し、週間スケジュールが可能なFMラジオを製作したので紹介する。<br>
+丸形カラーLCDは、1.28インチ、240x240、ドライバーはCG9A01である。<br>
+DSPラジオICはRDA5807FP、I2Cインターフェースによるコントローラ（MCU）はSeeed Studio XIAO ESP32C3である。<br>
+XIAO ESP32C3では、Clockの設定にNTPを利用し、内蔵のWebサーバー機能で、操作／週間スケジュールの設定を行っている。<br>
+開発はArduino IDE 1.8で行った。<br>
+丸形カラーLCD以外の基本的なことは、<a href="https://github.com/asmnoak/RDA5807_radio_ESP32C3_with_weekly_Schedule">こちら</a>を参照のこと。
 </p>
 
-<p><strong>�T�v</strong><br>
-�ی`�J���[LCD�́ASPI�Ő��䂷��̂ŁAI2C��SPI�𓯎��ɗ��p���邱�ƂɂȂ�B���̏ꍇ�AXIAO ESP32C3�͓��o�̓s���̐���������̂ŁA<br>
-����̓{�^���X�C�b�`�ł͂Ȃ��AWiFi�o�R�ōs�Ȃ����ƂɂȂ�B<br>
-CG9A01���T�|�[�g���郉�C�u������<a href="https://github.com/Bodmer/TFT_eSPI">"TFT_eSPI.h"</a>�𗘗p�����B
-<p>TFT_eSPI�͎��O�ɁA�g�p����h���C�o��MCU�ɑΉ����邽�߂̕ύX���K�v�ł���B���C�u�������C���X�g�[��������A�u..\Arduino\libraries\TFT_eSPI�v�́uUser_Setup.h�v��ҏW����B<br>
-�ҏW��̃t�@�C�����uUser_Setup.h.mod�v�ł���B</p>
+<p><strong>概要</strong><br>
+丸形カラーLCDは、SPIで制御するので、I2CとSPIを同時に利用することになる。この場合、XIAO ESP32C3は入出力ピンの数が限られるので、<br>
+操作はボタンスイッチではなく、WiFi経由で行なうことになる。<br>
+CG9A01をサポートするライブラリは<a href="https://github.com/Bodmer/TFT_eSPI">"TFT_eSPI.h"</a>を利用した。
+<p>TFT_eSPIは事前に、使用するドライバとMCUに対応するための変更が必要である。ライブラリをインストールした後、「..\Arduino\libraries\TFT_eSPI」の「User_Setup.h」を編集する。<br>
+編集後のファイルが「User_Setup.h.mod」である。</p>
 <ol>
-<li>�uSection 1. Call up the right driver file and any options for it�v�̌��ɁA�f�B�X�v���C�Ή��̃h���C�o�̒�`������̂ŁA�u#define ILI9341_DRIVER�v�̍s���R�����g�����A�u#define GC9A01_DRIVER�v�̍s���u��v�R�����g������B</li>
-<li>�uSection 2. Define the pins that are used to interface with the display here�v�̌��ɁA�eMCU����SPI�ɑ΂���s���̒�`������̂ł����ύX����B�܂��AESP8266�̃s����`���R�����g������B<br>
-���ɁAXIAO_ESP32C3�ɑ΂���s����`��ǉ�����B�ǉ����e�́A�uUser_Setup.h.mod�v���Q�Ƃ̂��ƁB</li>
+<li>「Section 1. Call up the right driver file and any options for it」の個所に、ディスプレイ対応のドライバの定義があるので、「#define ILI9341_DRIVER」の行をコメント化し、「#define GC9A01_DRIVER」の行を「非」コメント化する。</li>
+<li>「Section 2. Define the pins that are used to interface with the display here」の個所に、各MCUごとSPIに対するピンの定義があるのでそれを変更する。まず、ESP8266のピン定義をコメント化する。<br>
+次に、XIAO_ESP32C3に対するピン定義を追加する。追加内容は、「User_Setup.h.mod」を参照のこと。</li>
 </ol>
 </p>
-<p><strong>H/W�\��</strong><br>
- �ESeeed Studio XIAO ESP32C3 - �R���g���[��<br>
- �EI2C�ڑ�&nbsp; RDA5807FP<br>
- �ESPI�ڑ�&nbsp; �ی`�J���[LCD�\�����u(CG9A01)<br>
- �EXtal���U��i32768Hz�j�A�R���f���T�ށA�I�[�f�B�I�W���b�N�A�z����<br>
+<p><strong>H/W構成</strong><br>
+ ・Seeed Studio XIAO ESP32C3 - コントローラ<br>
+ ・I2C接続&nbsp; RDA5807FP<br>
+ ・SPI接続&nbsp; 丸形カラーLCD表示装置(CG9A01)<br>
+ ・Xtal発振器（32768Hz）、コンデンサ類、オーディオジャック、配線類<br>
 </p>
 <p>
-<img src="./CG9A01_RDA5807_XIAO_1.jpg" width="440" height="360"><br>
-�������ی`�J���[LCD�A�E����XIAO ESP32C��RDA5807FP�̊�B�Ȃ��ABLK�i�o�b�N���C�g����j�͐ڑ����Ă��Ȃ��B
+<-- img src="./CG9A01_RDA5807_XIAO_1.jpg" width="440" height="360"><br -->
+![CG9A01_RDA5807_XIAO_1](https://github.com/asmnoak/RDA5807_radio_ESP32C3_with_weekly_Schedule_round_LCD/assets/39426016/6f05ab88-899a-4f0b-9769-642a3abd06d3)
+左側が丸形カラーLCD、右側がXIAO ESP32CとRDA5807FPの基板。なお、BLK（バックライト制御）は接続していない。
 </p>
-<p><strong>�ڑ�</strong><br>
-�e�R���|�[�l���g�̐ڑ��͈ȉ��̒ʂ�B<br>
+<p><strong>接続</strong><br>
+各コンポーネントの接続は以下の通り。<br>
 <p>
 <table> 
 <tr>
@@ -69,35 +70,35 @@ CG9A01���T�|�[�g���郉�C�u������<a href="https://github.com/Bodmer/TFT_eSPI">"TF
 </p>
 </p>
 <p>
-I2C�̃A�h���X
+I2Cのアドレス
 <table> 
 <tr>
-<td>RDA5807FP</td><td>0x10&nbsp;or&nbsp;0x11&nbsp;���C�u�����Ŋ���</td>
+<td>RDA5807FP</td><td>0x10&nbsp;or&nbsp;0x11&nbsp;ライブラリで既定</td>
 </tr>
 </table>
 </p>
-<p><strong>�C���X�g�[��</strong><br>
+<p><strong>インストール</strong><br>
 <ol>
-<li>�R�[�h���AZIP�`���Ń_�E�����[�h</li>
-<li>�ǉ��̃��C�u�������AZIP�`���Ń_�E�����[�h�A���C�u�����}�l�[�W������C���X�g�[������</li>
+<li>コードを、ZIP形式でダウンロード</li>
+<li>追加のライブラリを、ZIP形式でダウンロード、ライブラリマネージャからインストールする</li>
  <ul>
-  <li>RDA5807�i���C�u�����}�l�[�W�����猟���j</li>
+  <li>RDA5807（ライブラリマネージャから検索可）</li>
   <li>TFT_eSPI</li>
   <li>TimeLib&nbsp;:&nbsp; https://github.com/PaulStoffregen/Time</li>
  </ul>
-<li>ArduinoIDE����xiao_esp32c3_cg9a01_rda5801_wifi_clock_radio.ino���J��</li>
-<li>�u���؁E�R���p�C���v�ɐ���������A��U�A�u���O��t���ĕۑ��v���s��</li>
+<li>ArduinoIDEからxiao_esp32c3_cg9a01_rda5801_wifi_clock_radio.inoを開く</li>
+<li>「検証・コンパイル」に成功したら、一旦、「名前を付けて保存」を行う</li>
 </ol>
 </p>
-<p><strong>�኱�̉��</strong><br>
-�E�R�[�h����WiFi��SSID��PASSWORD�́A���p���Ă��閳�����[�^�[�̂��̂��w�肷��B<br>
-�E�܂��AstnFreq[]�Ɏ�M��������ǂ̎��g�����w�肷��B�Ⴆ��80.4MHz�̏ꍇ�A8040�Ǝw�肷��BstnName[]�ɂ͑Ή���������ǖ����w�肷��B<br>
-�E"Free_Fonts.h"��TFT_eSPI�̃T���v�����R�s�[�������̂ł���B�t�H���g�̎��̂�TFT_eSPI���C�u�������ɑ��݂���B<br>
-�E�O������鉩�F�̊ۈ�́A�b�j�̑ւ��ł���B<br>
+<p><strong>若干の解説</strong><br>
+・コード中のWiFiのSSIDとPASSWORDは、利用している無線ルーターのものを指定する。<br>
+・また、stnFreq[]に受信する放送局の周波数を指定する。例えば80.4MHzの場合、8040と指定する。stnName[]には対応する放送局名を指定する。<br>
+・"Free_Fonts.h"はTFT_eSPIのサンプルよりコピーしたものである。フォントの実体はTFT_eSPIライブラリ内に存在する。<br>
+・外周を回る黄色の丸印は、秒針の替わりである。<br>
 <p>
 <img src="./CG9A01_RDA5807_XIAO_2.jpg" width="360" height="360"><br>
 </p>
 </p>
-<p><strong>���ӎ���</strong><br>
-�E���p�̍ۂ́A���ȐӔC�ł��y���݂��������B<br>
+<p><strong>注意事項</strong><br>
+・利用の際は、自己責任でお楽しみください。<br>
 </p>
